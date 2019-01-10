@@ -1,0 +1,40 @@
+<html>
+
+<head>
+	<link href="style.css" rel="stylesheet">
+
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
+	 crossorigin="anonymous">
+	<link rel="icon" type="image/x-icon" href="favicon.ico">
+</head>
+
+<body>
+	<form>
+		<div class="form-group">
+			<label for="username">getPosts</label>
+			<div class="input-group">
+				<div class="input-group-prepend">
+					<div class="input-group-text">@</div>
+				</div>
+				<input type="text" class="form-control" id="username" aria-describedby="enter username" placeholder="Username">
+			</div>
+			<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
+		</div>
+		<button id="submit" type="submit" class="btn btn-primary">Submit</button>
+	</form>
+
+	<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha256-3edrmyuQ0w65f8gfBsqowzjJe2iM6n0nKciPUp8y+7E="
+	 crossorigin="anonymous"></script>
+
+	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+	 crossorigin="anonymous"></script>
+
+	<script>
+		$('#submit').click(function () {
+			let username = $('#username').val()
+			console.log('Submitted ' + username)
+		})
+	</script>
+</body>
+
+</html>
