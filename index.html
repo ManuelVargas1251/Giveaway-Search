@@ -21,8 +21,9 @@
 			</div>
 			<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
 		</div>
-		<button id="submit" type="button" class="btn btn-primary">Submit</button>
+
 	</form>
+	<button id="search" type="button" class="btn btn-primary">Search</button>
 	<div id='response'></div>
 
 	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
@@ -33,18 +34,26 @@
 
 	<script>
 		// Submit Button Event Handler
-		$('#submit').click(function () {
+		$('#search').click(function () {
 			// saves username
 			let username = $('#username').val()
-			
-			// Response Handler
+
+			// Send Request & load Response to DOM
 			$('#response').load('/search', username, function (response, status) {
-				if(status != 'success'){console.error(status)}
+				if (status != 'success') {console.error(status)}
 				console.log('response: ' + response)
 			})
 
 			//clears form input
 			$('#myForm')[0].reset()
+		})
+
+		// when pressing enter, prevent page reload and trigger click
+		$('input[type=text]').on('keypress', function (e) {
+			if (e.which == 13) {
+				e.preventDefault()
+				$('#search').trigger('click')
+			}
 		})
 	</script>
 </body>
