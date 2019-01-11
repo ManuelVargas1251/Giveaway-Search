@@ -2,9 +2,7 @@
 
 <head>
 	<style>
-		body{
-			padding: 2em;
-		}
+		body{padding: 2em;}
 	</style>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	 crossorigin="anonymous">
@@ -12,14 +10,14 @@
 </head>
 
 <body>
-	<form>
+	<form id='myForm'>
 		<div class="form-group">
 			<label for="username">getPosts</label>
 			<div class="input-group">
 				<div class="input-group-prepend">
 					<div class="input-group-text">@</div>
 				</div>
-				<input type="text" class="form-control" id="username" aria-describedby="enter username" placeholder="Username">
+				<input type="text" class="form-control" id="username" aria-describedby="enter username" placeholder="username">
 			</div>
 			<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
 		</div>
@@ -36,11 +34,17 @@
 	<script>
 		// Submit Button Event Handler
 		$('#submit').click(function () {
+			// saves username
 			let username = $('#username').val()
-			console.log('Submitted: ' + username)
-			$('#response').load('/search', username, function (response, status, xhr) {
+			
+			// Response Handler
+			$('#response').load('/search', username, function (response, status) {
+				if(status != 'success'){console.error(status)}
 				console.log('response: ' + response)
 			})
+
+			//clears form input
+			$('#myForm')[0].reset()
 		})
 	</script>
 </body>
