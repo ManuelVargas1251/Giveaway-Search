@@ -5,6 +5,15 @@ const app = express()
 const Crawler = require("crawler");
 const path = require('path')
 const preURL = 'https://www.'
+
+
+app.listen(process.env.PORT || 3000)
+console.log("--ready to search--")
+
+
+
+
+
 const c = new Crawler({
   maxConnections: 10,
   // deafult callback function
@@ -20,6 +29,7 @@ const c = new Crawler({
     done();
   }
 });
+
 
 
 // Homepage Router
@@ -66,6 +76,4 @@ app.get('/search', function (req, res) {
 
 })
 
-app.listen(process.env.PORT || 3000)
 
-console.log("--ready to search--")
