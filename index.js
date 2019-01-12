@@ -7,11 +7,6 @@ const path = require('path')
 const preURL = 'https://www.'
 
 
-app.listen(process.env.PORT || 3000)
-console.log("--ready to search--")
-
-
-
 
 
 const c = new Crawler({
@@ -30,7 +25,9 @@ const c = new Crawler({
   }
 });
 
-
+app.get('/client.js', function (req, res) {
+  res.sendFile(path.join(__dirname + '/client.js'));
+});
 
 // Homepage Router
 app.get('/', function (req, res) {
@@ -50,30 +47,42 @@ app.get('/search', function (req, res) {
   //c.queue(preURL + 'amazon.com' + '')
 
   c.queue([{
-    uri: preURL + 'google.com' + '/' + username,
+    uri: preURL + 'instagram.com' + '/' + username,
     // The global callback won't be called
-    callback: function (error, res, done) {
+    callback: function (error, jq, done) {
+      console.log('--begin crawl response--')
       if (error) {
         console.log(error);
       } else {
         //reponse from 
-        let $ = res.$;
-        // $ is Cheerio by default
-        //a lean implementation of core jQuery designed specifically for the server
-        console.log($("title").text());
-        console.log('Grabbed', res.body.length, 'bytes');
+        let $ = jq.$,
+          title = $("title").text()
+
+
+        console.log(title);
+        console.log('Grabbed', jq.body.length, 'bytes');
+
+        if (title.includes('Page Not Found')) {
+          console.log('page not found')
+          res.send('❌')
+        } else {
+          res.send('✔')
+        }
       }
+      console.log('--end crawl response--')
+      res.end()
       done();
     }
-  }]);
-
-
+  }])
   // if URL resolves, send check
-  res.send("✔")
+  //res.send("✔")
 
   //else DNE or Private
   //res.send("❌")
 
+
 })
 
 
+app.listen(process.env.PORT || 3000)
+console.log("--ready to search--")
