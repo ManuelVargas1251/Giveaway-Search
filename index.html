@@ -1,38 +1,33 @@
 <html>
 
 <head>
-	<style>
-		body{padding: 2em;}
-	</style>
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
 	 crossorigin="anonymous">
 	<link rel="icon" type="image/x-icon" href="#">
 </head>
 
-<body>
-	<form id='myForm'>
+<div id='body' class='container-fluid p-5 '>
+	<form id='myForm' >
 		<div class="form-group">
 			<label for="username">getPosts</label>
-			<div class="input-group">
+			<div class="input-group input-group-lg">
 				<div class="input-group-prepend">
-					<div class="input-group-text">@</div>
+					<span class="input-group-text">@</span>
 				</div>
-				<input type="text" class="form-control" id="username" aria-describedby="enter username" placeholder="username">
+				<input type="text" class="form-control" id="username" aria-describedby="enter username" placeholder="username" autocomplete="off" >
 			</div>
 			<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
 		</div>
-
+		<button id="search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
 	</form>
-	<button id="search" type="button" class="btn btn-primary">Search</button>
 	<div id='response'></div>
+</div>
 
-	<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
-	 crossorigin="anonymous"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
+ crossorigin="anonymous"></script>
 
-	<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
-	 crossorigin="anonymous"></script>
-	<script src="client.js"></script>
-
-</body>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+ crossorigin="anonymous"></script>
+<script src="client.js"></script>
 
 </html>
