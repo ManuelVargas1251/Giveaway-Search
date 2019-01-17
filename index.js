@@ -41,7 +41,7 @@ app.get('/search', function (req, res) {
   }
 
   c.queue([{
-    uri: preURL + 'instagram.com' + '/heatherday', //+ username,
+    uri: preURL + 'instagram.com/' + username,
     // The global callback won't be called
     callback: function (error, ch, done) {
       console.log('--begin crawl response--')
