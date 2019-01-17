@@ -6,9 +6,6 @@ const Crawler = require("crawler");
 const path = require('path')
 const preURL = 'https://www.'
 
-
-
-
 const c = new Crawler({
   maxConnections: 10,
   // deafult callback function
@@ -25,6 +22,7 @@ const c = new Crawler({
   }
 });
 
+// Client-Side JS Router
 app.get('/client.js', function (req, res) {
   res.sendFile(path.join(__dirname + '/client.js'));
 });
@@ -42,29 +40,39 @@ app.get('/search', function (req, res) {
     console.error('no name')
   }
 
-  //crawl with the username!
-  // Queue just one URL, with default callback
-  //c.queue(preURL + 'amazon.com' + '')
-
   c.queue([{
-    uri: preURL + 'instagram.com' + '/' + username,
+    uri: preURL + 'instagram.com' + '/heatherday', //+ username,
     // The global callback won't be called
-    callback: function (error, jq, done) {
+    callback: function (error, ch, done) {
       console.log('--begin crawl response--')
       if (error) {
         console.log(error);
       } else {
-        //reponse from 
-        let $ = jq.$,
-          title = $("title").text()
+        let $ = ch.$
 
+        let title = $('title').text()
 
-        console.log(title);
-        console.log('Grabbed', jq.body.length, 'bytes');
+        console.log(title)
+        //console.log('$body: ' + $videos)
+        //$body.addClass('myclass')
+        // console.log($('body').attr('class'))
+        // console.log($('body').children()[0].children[0] )
+        
+          let search = $('div[class=v1Nh3]').html()//.children()[0]
+
+          //search = JSON.stringify(search)
+
+          console.log(search)//._root[0].children[0])
+        
+        // console.log(
+        //   'BODDY::',
+        //   $('article > div > div > div > div > a').attr('href'),
+        //   '::BODDY'
+        // )
 
         if (title.includes('Page Not Found')) {
-          console.log('page not found')
-          res.send('❌')
+          //console.warn('page not found')
+          res.send('❌ Page Not Found')
         } else {
           res.send('✔')
         }
@@ -74,13 +82,6 @@ app.get('/search', function (req, res) {
       done();
     }
   }])
-  // if URL resolves, send check
-  //res.send("✔")
-
-  //else DNE or Private
-  //res.send("❌")
-
-
 })
 
 

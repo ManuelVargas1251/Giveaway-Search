@@ -1,4 +1,4 @@
-# Quick Away
+# Giveaway Search
 
 https://giveawaysearch.herokuapp.com/
 
