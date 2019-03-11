@@ -1,33 +1,38 @@
 <html>
 
 <head>
-	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS"
-	 crossorigin="anonymous">
+	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
+		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<link rel="icon" type="image/x-icon" href="#">
 </head>
 
-<div id='body' class='container-fluid p-5 '>
-	<form id='myForm' >
-		<div class="form-group">
-			<label for="username">getPosts</label>
-			<div class="input-group input-group-lg">
-				<div class="input-group-prepend">
-					<span class="input-group-text">@</span>
+<body>
+	<div id='body' class='container-fluid p-5 '>
+		<form id='myForm'>
+			<div class="form-group">
+				<label for="username">getPosts</label>
+				<div class="input-group input-group-lg">
+					<div class="input-group-prepend">
+						<span class="input-group-text">@</span>
+					</div>
+					<input type="text" class="form-control" id="username" aria-describedby="enter username"
+						placeholder="username" autocomplete="off">
 				</div>
-				<input type="text" class="form-control" id="username" aria-describedby="enter username" placeholder="username" autocomplete="off" >
+				<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
 			</div>
-			<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
-		</div>
-		<button id="search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
-	</form>
-	<div id='response'></div>
-</div>
+			<button id="search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
+		</form>
+		<div id='response'></div>
+	</div>
+	<div id="profiles"></div>
+</body>
+</body>
+<script src="https://code.jquery.com/jquery-3.3.1.min.js"
+	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
 
-<script src="https://code.jquery.com/jquery-3.3.1.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8="
- crossorigin="anonymous"></script>
-
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js" integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
- crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
+	integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
+	crossorigin="anonymous"></script>
 <script src="client.js"></script>
 
 </html>
