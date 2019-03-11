@@ -38,8 +38,9 @@ app.get('/getProfiles', function (reg, res) {
     console.log('-- getting profiles --')
     const state = db.getState()
     const str = JSON.stringify(state["profile"], null, 2)
-    console.log(str)
-    res.send(str)
+    const ar = Array.from(JSON.parse(str))
+    console.log(ar)
+    res.send(state["profile"])
 })
 
 app.listen(process.env.PORT || 3000)
