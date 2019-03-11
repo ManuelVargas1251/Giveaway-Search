@@ -8,7 +8,6 @@ $('#search').click(function () {
         if (status != 'success') { console.error(status) }
         console.log('response: ' + response)
     })
-
     //clears form input
     $('#myForm')[0].reset()
 })
@@ -19,4 +18,9 @@ $('input[type=text]').on('keypress', function (e) {
         e.preventDefault()
         $('#search').trigger('click')
     }
+})
+
+$('#profiles').load('/getProfiles', function (response, status) {
+    if (status != 'success') { console.error(status) }
+    console.log('response: ' + response)
 })
