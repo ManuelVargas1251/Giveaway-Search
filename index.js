@@ -30,14 +30,14 @@ app.get('/search', function (req, res) {
     }
 
     searchProfile(username, 'https://www.instagram.com/' + username);
-    res.send('✔')
+    res.send('✔ Searching, reload your page to see results?')
 });
 
 // send all profiles to client UI
 app.get('/getProfiles', function (reg, res) {
     console.log('-- getting profiles --')
     const state = db.getState()
-    const str = JSON.stringify(state["profile"], null, 2)
+    const str = JSON.stringify(state["profile"])
     const ar = Array.from(JSON.parse(str))
     console.log(ar)
     res.send(state["profile"])

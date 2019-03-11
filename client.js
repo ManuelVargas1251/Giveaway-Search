@@ -36,14 +36,13 @@ $('#profiles').load('/getProfiles', function (response, status) {
 
         for (i = 0; profileLength > i; i++) {
             list = list.concat('<ul class="list-group">')
-            list = list.concat('<li class="list-group-item">')
-            list = list.concat(JSON.stringify(profiles[i].name).replace(/['"]+/g, ''))
-            list = list.concat('</li>')
-            list = list.concat('</ul>')
+                .concat('<li class="list-group-item">')
+                .concat('@')
+                .concat(JSON.stringify(profiles[i].name).replace(/['"]+/g, ''))
+                .concat('</li>')
+                .concat('</ul>')
         }
-
         console.log(list)
         return list
     })
-
 })
