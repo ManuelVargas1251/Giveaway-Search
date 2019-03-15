@@ -23,10 +23,10 @@ $('input[type=text]').on('keypress', function (e) {
 // loads profiles from db
 $('#profiles').load('/getProfiles', function (response, status) {
     if (status != 'success') { console.error(status) }
-    //console.log('response: ' + response)
+    console.log('response: ' + response)
     let profiles = JSON.parse(response)
     let profileLength = profiles["results"].length
-    //console.log('response: ' + profiles)
+    console.log('response: ' + profiles)
     //console.log('profiles len: ' + profiles.length)
     //console.log('profiles: ' + profiles[0])
 
