@@ -20,29 +20,27 @@ $('input[type=text]').on('keypress', function (e) {
     }
 })
 
+// loads profiles from db
 $('#profiles').load('/getProfiles', function (response, status) {
     if (status != 'success') { console.error(status) }
     //console.log('response: ' + response)
-    //console.log('response: ' + response)
-    let profiles = JSON.parse(response);//response;//
-
+    let profiles = JSON.parse(response)
+    let profileLength = profiles["results"].length
+    //console.log('response: ' + profiles)
     //console.log('profiles len: ' + profiles.length)
-    let profileLength = profiles.length
     //console.log('profiles: ' + profiles[0])
 
-
     $('#profiles').html(function () {
-        let list = ''
+        let list = '<ul class="list-group">'
 
         for (i = 0; profileLength > i; i++) {
-            list = list.concat('<ul class="list-group">')
-                .concat('<li class="list-group-item">')
+            list = list.concat('<li class="list-group-item">')
                 .concat('@')
-                .concat(JSON.stringify(profiles[i].name).replace(/['"]+/g, ''))
+                .concat(JSON.stringify(profiles["results"][i].name).replace(/['"]+/g, ''))
                 .concat('</li>')
-                .concat('</ul>')
         }
-        console.log(list)
+        list = list.concat('</ul>')
+        //console.log(list)
         return list
     })
 })

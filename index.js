@@ -4,48 +4,58 @@ const express = require('express')
 const app = express()
 const path = require('path')
 
-//low db
-const low = require('lowdb')
-const FileSync = require('lowdb/adapters/FileSync')
-const adapter = new FileSync('db.json')
-const db = low(adapter)
+// Postgres
+const { Pool } = require('pg');
+const pool = new Pool({
+    connectionString: process.env.DATABASE_URL,
+    ssl: false
+});
+
 
 // Client-Side JS Router
 app.get('/client.js', function (req, res) {
     res.sendFile(path.join(__dirname + '/client.js'));
 });
 
-// Homepage Router
-//routes the url to index.html
-app.get('/', function (req, res) {
-    res.sendFile(path.join(__dirname + '/index.html'))
+// Routers
+// routes the url to index.html
+app
+    // Homepage Router
+    .get('/', function (req, res) {
+        res.sendFile(path.join(__dirname + '/index.html'))
+    })
+    // Username Router
+    .get('/search', function (req, res) {
+        console.log('---server search---')
+        let username = Object.keys(req.query)[0];
+        if (username === undefined || username === '') {
+            console.error('no name');
+        }
+        searchProfile(username, 'https://www.instagram.com/' + username);
+        res.send('✔ Searching, reload your page to see results?')
+    })
+    // Profile Router
+    .get('/getProfiles', async (req, res) => {
+        console.log('hey')
+        try {
+            const client = await pool.connect()
+            const result = await client.query('SELECT name FROM profiles');
+            const results = { 'results': (result) ? result.rows : null };
+            //res.render('pages/db', results);
+            console.log(results)
+            res.json(results);
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+    });
+
+
+// start server
+app.listen(process.env.PORT || 3000, () => {
+    console.log("--server ready--")
 })
-
-// Username Router and Handler
-app.get('/search', function (req, res) {
-    console.log('---server search---')
-    let username = Object.keys(req.query)[0];
-    if (username === undefined || username === '') {
-        console.error('no name');
-    }
-
-    searchProfile(username, 'https://www.instagram.com/' + username);
-    res.send('✔ Searching, reload your page to see results?')
-});
-
-// send all profiles to client UI
-app.get('/getProfiles', function (reg, res) {
-    console.log('-- getting profiles --')
-    const state = db.getState()
-    const str = JSON.stringify(state["profile"])
-    const ar = Array.from(JSON.parse(str))
-    console.log(ar)
-    res.send(state["profile"])
-})
-
-app.listen(process.env.PORT || 3000)
-console.log("--ready to search--")
-
 
 const puppeteer = require('puppeteer');
 const stripHtml = require("string-strip-html");
@@ -108,7 +118,6 @@ async function searchProfile(name, profileUrl) {
         } catch (error) {
             console.log(error)
         }
-
     }
 
     // grab profile posts
