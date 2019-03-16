@@ -9,7 +9,7 @@ const { Pool } = require('pg');
 const pool = new Pool(
     {
         connectionString: process.env.DATABASE_URL,
-        ssl: false
+        ssl: true
     }
 );
 
@@ -60,7 +60,7 @@ app.listen(process.env.PORT || 3000, () => {
 const puppeteer = require('puppeteer');
 const stripHtml = require("string-strip-html");
 
-async function insertPosts(url, caption, profileUrl) {
+async function insertPost(url, caption, profileUrl) {
     console.log('---profileInsert---')
     let results
     //check if post is already in db
@@ -92,9 +92,10 @@ async function insertPosts(url, caption, profileUrl) {
             const client = await pool.connect()
             const result = await client.query({
                 text: `
-                INSERT INTO posts(url,profile_url,caption) 
-                VALUES($1, $2, $3)`,
-                values: [url, profileUrl, caption]
+                INSERT INTO posts(url,profile_url,caption,create_date) 
+                VALUES($1, $2, $3, $4)
+                `,
+                values: [url, profileUrl, stripHtml(caption), moment().format()]
             });
             console.log("insertResult:" + JSON.stringify(result))
         } catch (error) {
@@ -134,9 +135,9 @@ async function insertProfile(name, profileURL) {
             const client = await pool.connect()
             const result = await client.query({
                 text: `
-                INSERT INTO profiles(name, url) 
+                INSERT INTO profiles(name, url, create_date) 
                 VALUES($1, $2)`,
-                values: [name, profileURL]
+                values: [name, profileURL, moment().format()]
             });
             // console.log("insertResult:" + result)
         } catch (error) {
@@ -215,11 +216,11 @@ async function searchProfile(name, profileUrl) {
             console.log(error + ' selector may have been updated')
         }
 
-        insertPosts(instagramPosts[i], instagramCaption[i], profileUrl)
+        insertPost(instagramPosts[i], instagramCaption[i], profileUrl)
+
 
         console.log('iCount: ' + i)
     }
-    //console.log('caption: ' + stripHtml(instagramCaption))
     console.log('-- complete --')
     await browser.close()
 }
