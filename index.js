@@ -6,11 +6,12 @@ const path = require('path')
 
 // Postgres
 const { Pool } = require('pg');
-const pool = new Pool({
-    connectionString: process.env.DATABASE_URL,
-    ssl: false
-});
-
+const pool = new Pool(
+    {
+        connectionString: process.env.DATABASE_URL,
+        ssl: true
+    }
+);
 
 // Client-Side JS Router
 app.get('/client.js', function (req, res) {
@@ -36,7 +37,6 @@ app
     })
     // Profile Router
     .get('/getProfiles', async (req, res) => {
-        console.log('hey')
         try {
             const client = await pool.connect()
             const result = await client.query('SELECT name FROM profiles');
@@ -64,19 +64,99 @@ const stripHtml = require("string-strip-html");
 //     searchProfile(name, 'https://www.instagram.com/' + name)
 // })();
 
+async function insertPosts(url, caption, profileUrl) {
+    console.log('---profileInsert---')
+    let results
+    //check if post is already in db
+    try {
+        const client = await pool.connect()
+        const result = await client.query({
+            text: `
+            SELECT COUNT(*)
+            FROM posts 
+            WHERE url = $1`,
+            values: [url]
+        });
+
+        results = result["rows"][0].count
+        console.log('db posts result: ' + result["rows"][0].count)
+
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+
+    //test if caption contains keywords?
+    //only save if post has keywords, 'giveaway'
+    if (results == 0 && caption.indexOf('giveaway') != -1) {
+
+        // console.log('profile ' + name + ' not found in db, inserting to db')
+        try {
+            const client = await pool.connect()
+            const result = await client.query({
+                text: `
+                INSERT INTO posts(url,profile_url,caption) 
+                VALUES($1, $2, $3)`,
+                values: [url, profileUrl, caption]
+            });
+            console.log("insertResult:" + JSON.stringify(result))
+        } catch (error) {
+            console.error(error);
+        }
+    }
+}
+
+async function insertProfile(name, profileURL) {
+    // console.log('---profileInsert---')
+
+    let results
+    // search if profile is already in DB
+    try {
+        const client = await pool.connect()
+        const result = await client.query({
+            text: `
+            SELECT COUNT(*)
+            FROM profiles 
+            WHERE url = $1`,
+            values: [profileURL]
+        });
+
+        results = result["rows"][0].count
+        //console.log('profileResult: ' + result["rows"][0].count)
+
+        client.release();
+    } catch (err) {
+        console.error(err);
+        res.send("Error " + err);
+    }
+
+    // if profile url not found, insert in DB
+    if (results == 0) {
+        // console.log('profile ' + name + ' not found in db, inserting to db')
+        try {
+            const client = await pool.connect()
+            const result = await client.query({
+                text: `
+                INSERT INTO profiles(name, url) 
+                VALUES($1, $2)`,
+                values: [name, profileURL]
+            });
+            // console.log("insertResult:" + result)
+        } catch (error) {
+            console.error(err);
+        }
+    }
+    // console.log('--- profileInsert--end ---')
+}
+
 // this is an async function/ use to separate your code to methods
 async function searchProfile(name, profileUrl) {
     console.log('-- searchProfile --')
 
-    db.defaults({
-        profile: [],
-        posts: []
-    })
-        .write()
-
     //open browser page
     const browser = await puppeteer.launch({
-        headless: false
+        headless: true
         , slowMo: 20
     })
     const page = await browser.newPage()
@@ -93,32 +173,10 @@ async function searchProfile(name, profileUrl) {
     const instagramCaption = []
     let postCount = 0
 
-
-    // get all urls from each posts on the profile page
     await page.goto(profileUrl)
 
-    //search lowdb profile, if url exists, do not store
-    //continue to saving non-duplicate posts with profileURL of url
-
-    let findProfile = db.get('profile')
-        .find({ url: profileUrl })
-        .value()
-
-    // if URL not found, add to db
-    if (findProfile == undefined) {
-        //profile url not found in db
-        //Add a profile
-        try {
-            db.get('profile')
-                .push({
-                    name: name,
-                    url: profileUrl
-                })
-                .write()
-        } catch (error) {
-            console.log(error)
-        }
-    }
+    //insert to db, no dups
+    insertProfile(name, profileUrl)
 
     // grab profile posts
     for (i = 1; i <= 3; i++) {
@@ -160,30 +218,7 @@ async function searchProfile(name, profileUrl) {
             console.log(error + ' selector may have been updated')
         }
 
-        //check if post is already in db
-        let findPost = db.get('posts')
-            .find({ url: instagramPosts[i] })
-            .value()
-        //if post is undefined, save to db
-        if (findPost == undefined && instagramCaption[i].indexOf('giveaway') != -1) {
-
-            //test if caption contains keywords?
-            //only save if post has keywords, 'giveaway'
-
-            // save to database
-            try {
-                db.get('posts')
-                    .push({
-                        profileUrl: profileUrl,
-                        url: instagramPosts[i],
-                        caption: stripHtml(instagramCaption[i])
-                    })
-                    .write()
-            } catch (error) {
-                console.log(error)
-            }
-        }
-
+        insertPosts(instagramPosts[i], instagramCaption[i], profileUrl)
 
         console.log('iCount: ' + i)
     }

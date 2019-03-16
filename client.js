@@ -37,6 +37,8 @@ $('#profiles').load('/getProfiles', function (response, status) {
             list = list.concat('<li class="list-group-item">')
                 .concat('@')
                 .concat(JSON.stringify(profiles["results"][i].name).replace(/['"]+/g, ''))
+                .concat(`<i class="fas fa-sync-alt fa-spin fa-pull-right"></i>`
+                )
                 .concat('</li>')
         }
         list = list.concat('</ul>')
