@@ -157,7 +157,8 @@ async function searchProfile(name, profileUrl) {
     //open browser page
     const browser = await puppeteer.launch({
         headless: true
-        , slowMo: 20
+        , args: ['--no-sandbox']
+        //, slowMo: 20
     })
     const page = await browser.newPage()
     await page.setViewport({ width: 1920, height: 1080 });
