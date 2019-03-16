@@ -60,10 +60,6 @@ app.listen(process.env.PORT || 3000, () => {
 const puppeteer = require('puppeteer');
 const stripHtml = require("string-strip-html");
 
-// (async () => {
-//     searchProfile(name, 'https://www.instagram.com/' + name)
-// })();
-
 async function insertPosts(url, caption, profileUrl) {
     console.log('---profileInsert---')
     let results
