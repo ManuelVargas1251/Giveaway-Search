@@ -3,6 +3,7 @@ console.log("--starting server--")
 const express = require('express')
 const app = express()
 const path = require('path')
+const moment = require('moment');
 
 // Postgres
 const { Pool } = require('pg');
@@ -61,7 +62,7 @@ const puppeteer = require('puppeteer');
 const stripHtml = require("string-strip-html");
 
 async function insertPost(url, caption, profileUrl) {
-    console.log('---profileInsert---')
+    console.log('--- insertPost ---')
     let results
     //check if post is already in db
     try {
@@ -105,7 +106,7 @@ async function insertPost(url, caption, profileUrl) {
 }
 
 async function insertProfile(name, profileURL) {
-    // console.log('---profileInsert---')
+    console.log('--- insertProfile ---')
 
     let results
     // search if profile is already in DB
@@ -136,12 +137,12 @@ async function insertProfile(name, profileURL) {
             const result = await client.query({
                 text: `
                 INSERT INTO profiles(name, url, create_date) 
-                VALUES($1, $2)`,
+                VALUES($1, $2, $3)`,
                 values: [name, profileURL, moment().format()]
             });
-            // console.log("insertResult:" + result)
+            console.log("::Insert::Result::" + JSON.stringify(result))
         } catch (error) {
-            console.error(err);
+            console.error(error);
         }
     }
     // console.log('--- profileInsert--end ---')
@@ -222,5 +223,5 @@ async function searchProfile(name, profileUrl) {
         console.log('iCount: ' + i)
     }
     console.log('-- complete --')
-    await browser.close()
+    //await browser.close()
 }
