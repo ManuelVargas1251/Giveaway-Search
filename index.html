@@ -13,7 +13,7 @@
 <body>
 	<div id='body' class='container p-5'>
 		<form id='myForm'>
-			
+
 			<div class="form-group">
 				<label for="username">getPosts</label>
 				<div class="input-group input-group-lg">
@@ -26,10 +26,22 @@
 				<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
 			</div>
 			<div id='response'></div>
-			<button id="search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
+
+
+			<div class="btn-group btn-lg btn-block" role="group" aria-label="button group">
+				<button id="search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
+				<button type="button" class="btn btn-warning" disabled><i class="fas fa-lemon"></i></button>
+				<button type="button" class="btn btn-success"><i class="fas fa-sync-alt"></i></button>
+			</div>
 		</form>
 
-		<div id="profiles"></div>
+		<div id="profiles">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-grow text-primary" style="width: 5rem; height: 5rem;" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+		</div>
 	</div>
 </body>
 </body>

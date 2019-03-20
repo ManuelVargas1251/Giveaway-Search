@@ -34,7 +34,7 @@ app
             console.error('no name');
         }
         searchProfile(username, 'https://www.instagram.com/' + username);
-        res.send('✔ Searching, reload your page to see results?')
+        res.send(`<div class="alert alert-primary" role="alert">✔ Submitted, scanning, will show profile in list</div>`)
     })
     // Profile Router
     .get('/getProfiles', async (req, res) => {
