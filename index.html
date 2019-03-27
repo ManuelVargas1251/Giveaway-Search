@@ -1,6 +1,8 @@
-<html>
+<!doctype html>
+<html lang="en">
 
 <head>
+	<meta name="viewport" content="width=device-width, initial-scale=1 maximum-scale=1, user-scalable=no">
 	<link href="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/css/bootstrap.min.css" rel="stylesheet"
 		integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
@@ -9,7 +11,7 @@
 </head>
 
 <body>
-	<div id='body' class='container-fluid p-5 '>
+	<div id='body' class='container p-5'>
 		<form id='myForm'>
 			<div class="form-group">
 				<label for="username">getPosts</label>
@@ -22,17 +24,27 @@
 				</div>
 				<small id="emailHelp" class="form-text text-muted">Type in username to search</small>
 			</div>
-			<button id="search" type="button" class="btn btn-primary btn-lg btn-block">Search</button>
-		</form>
-		<div id='response'></div>
-		<div id="profiles"></div>
-	</div>
 
-</body>
+			<div id='response'></div>
+
+			<div class="btn-group btn-lg btn-block" role="group" aria-label="button group">
+				<button type="button" class="btn btn-primary btn-lg btn-block" id="search">Search</button>
+				<button type="button" class="btn btn-warning" disabled><i class="fas fa-lemon"></i></button>
+				<button type="button" class="btn btn-success"><i class="fas fa-sync-alt"></i></button>
+			</div>
+		</form>
+
+		<div id="profiles">
+			<div class="d-flex justify-content-center">
+				<div class="spinner-grow text-primary" style="width: 5rem; height: 5rem;" role="status">
+					<span class="sr-only">Loading...</span>
+				</div>
+			</div>
+		</div>
+	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
 	integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
-
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.2.1/js/bootstrap.bundle.min.js"
 	integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
 	crossorigin="anonymous"></script>

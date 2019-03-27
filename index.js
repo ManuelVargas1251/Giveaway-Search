@@ -3,6 +3,7 @@ console.log("--starting server--")
 const express = require('express')
 const app = express()
 const path = require('path')
+const moment = require('moment');
 
 // Postgres
 const { Pool } = require('pg');
@@ -33,7 +34,7 @@ app
             console.error('no name');
         }
         searchProfile(username, 'https://www.instagram.com/' + username);
-        res.send('✔ Searching, reload your page to see results?')
+        res.send(`<div class="alert alert-primary" role="alert">✔ Submitted, scanning, will show profile in list</div>`)
     })
     // Profile Router
     .get('/getProfiles', async (req, res) => {
@@ -49,7 +50,30 @@ app
             console.error(err);
             res.send("Error " + err);
         }
-    });
+    })
+    .get('/getPosts', async (req, res) => {
+        console.log('getPosts!!--🌏')
+        let id = Object.keys(req.query)[0]
+        console.log(id)
+
+        try {
+            const client = await pool.connect()
+            const result = await client.query({
+                text: `
+            SELECT caption 
+            FROM posts 
+            WHERE profile_url = $1`, values: [id]
+            });
+            const results = { 'results': (result) ? result.rows : null };
+            //res.render('pages/db', results);
+            console.log(results)
+            res.json(results);
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+    })
 
 
 // start server
@@ -60,12 +84,8 @@ app.listen(process.env.PORT || 3000, () => {
 const puppeteer = require('puppeteer');
 const stripHtml = require("string-strip-html");
 
-// (async () => {
-//     searchProfile(name, 'https://www.instagram.com/' + name)
-// })();
-
-async function insertPosts(url, caption, profileUrl) {
-    console.log('---profileInsert---')
+async function insertPost(url, caption, profileUrl) {
+    console.log('--- insertPost ---')
     let results
     //check if post is already in db
     try {
@@ -96,9 +116,10 @@ async function insertPosts(url, caption, profileUrl) {
             const client = await pool.connect()
             const result = await client.query({
                 text: `
-                INSERT INTO posts(url,profile_url,caption) 
-                VALUES($1, $2, $3)`,
-                values: [url, profileUrl, caption]
+                INSERT INTO posts(url,profile_url,caption,create_date) 
+                VALUES($1, $2, $3, $4)
+                `,
+                values: [url, profileUrl, stripHtml(caption), moment().format()]
             });
             console.log("insertResult:" + JSON.stringify(result))
         } catch (error) {
@@ -108,7 +129,7 @@ async function insertPosts(url, caption, profileUrl) {
 }
 
 async function insertProfile(name, profileURL) {
-    // console.log('---profileInsert---')
+    console.log('--- insertProfile ---')
 
     let results
     // search if profile is already in DB
@@ -138,13 +159,13 @@ async function insertProfile(name, profileURL) {
             const client = await pool.connect()
             const result = await client.query({
                 text: `
-                INSERT INTO profiles(name, url) 
-                VALUES($1, $2)`,
-                values: [name, profileURL]
+                INSERT INTO profiles(name, url, create_date) 
+                VALUES($1, $2, $3)`,
+                values: [name, profileURL, moment().format()]
             });
-            // console.log("insertResult:" + result)
+            console.log("::Insert::Result::" + JSON.stringify(result))
         } catch (error) {
-            console.error(err);
+            console.error(error);
         }
     }
     // console.log('--- profileInsert--end ---')
@@ -157,7 +178,8 @@ async function searchProfile(name, profileUrl) {
     //open browser page
     const browser = await puppeteer.launch({
         headless: true
-        , slowMo: 20
+        , args: ['--no-sandbox']
+        //, slowMo: 20
     })
     const page = await browser.newPage()
     await page.setViewport({ width: 1920, height: 1080 });
@@ -218,11 +240,11 @@ async function searchProfile(name, profileUrl) {
             console.log(error + ' selector may have been updated')
         }
 
-        insertPosts(instagramPosts[i], instagramCaption[i], profileUrl)
+        insertPost(instagramPosts[i], instagramCaption[i], name)
+
 
         console.log('iCount: ' + i)
     }
-    //console.log('caption: ' + stripHtml(instagramCaption))
     console.log('-- complete --')
-    await browser.close()
+    //await browser.close()
 }
