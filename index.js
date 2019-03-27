@@ -50,7 +50,30 @@ app
             console.error(err);
             res.send("Error " + err);
         }
-    });
+    })
+    .get('/getPosts', async (req, res) => {
+        console.log('getPosts!!--🌏')
+        let id = Object.keys(req.query)[0]
+        console.log(id)
+
+        try {
+            const client = await pool.connect()
+            const result = await client.query({
+                text: `
+            SELECT caption 
+            FROM posts 
+            WHERE profile_url = $1`, values: [id]
+            });
+            const results = { 'results': (result) ? result.rows : null };
+            //res.render('pages/db', results);
+            console.log(results)
+            res.json(results);
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+    })
 
 
 // start server
@@ -217,7 +240,7 @@ async function searchProfile(name, profileUrl) {
             console.log(error + ' selector may have been updated')
         }
 
-        insertPost(instagramPosts[i], instagramCaption[i], profileUrl)
+        insertPost(instagramPosts[i], instagramCaption[i], name)
 
 
         console.log('iCount: ' + i)
