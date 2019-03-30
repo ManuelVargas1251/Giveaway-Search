@@ -8,6 +8,7 @@ const moment = require('moment');
 // Postgres
 const { Pool } = require('pg');
 const pool = new Pool(
+
     {
         connectionString: process.env.DATABASE_URL,
         ssl: true
@@ -25,6 +26,10 @@ app
     // Homepage Router
     .get('/', function (req, res) {
         res.sendFile(path.join(__dirname + '/index.html'))
+    })
+    // User Router
+    .get('/user', function (req, res) {
+        res.sendFile(path.join(__dirname + '/user.html'))
     })
     // Username Router
     .get('/search', function (req, res) {

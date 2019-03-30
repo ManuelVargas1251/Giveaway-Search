@@ -20,3 +20,5 @@ heroku logs --tail -a giveawaysearch
 heroku login
 heroku pg:psql -a giveawaysearch
 ```
+
+future plan is to use amazon turk to analyze the caption texts
