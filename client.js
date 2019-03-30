@@ -2,22 +2,29 @@ localStorage.clear()
 
 // Submit Button Event Handler
 $('#search').click(function () {
+    $('#username').removeClass('is-invalid')
     // saves username
     let username = $('#username').val()
+    console.log('undefined??: ' + username)
+    if (username != undefined && username != '') {
+        // Send Request & load Response to DOM
+        $('#response').load('/search', username, function (response, status) {
+            if (status != 'success') { console.error(status) }
+            console.log('response: ' + response)
+        })
+        //clears form input
+        $('#myForm')[0].reset()
 
-    // Send Request & load Response to DOM
-    $('#response').load('/search', username, function (response, status) {
-        if (status != 'success') { console.error(status) }
-        console.log('response: ' + response)
-    })
-    //clears form input
-    $('#myForm')[0].reset()
-
-    // call the rest of the code and have it execute after 3 seconds
-    setTimeout(() => {
-        console.log('recalling profiles!')
-        getProfiles()
-    }, 6000);
+        // call the rest of the code and have it execute after 3 seconds
+        setTimeout(() => {
+            console.log('recalling profiles!')
+            getProfiles()
+        }, 6000);
+    } else {
+        console.log('undefined!!')
+        $('#username').addClass('is-invalid')
+        //$('#emailHelp').text('is-invalid')
+    }
 })
 
 // when pressing enter, prevent page reload and trigger click

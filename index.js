@@ -28,12 +28,14 @@ app
     // Username Router
     .get('/search', function (req, res) {
         console.log('---server search---')
-        let username = Object.keys(req.query)[0];
-        if (username === undefined || username === '') {
-            console.error('no name');
+        let username = Object.keys(req.query)[0]
+
+        console.log('username: ' + username)
+        if (username != undefined || username != '' || username != null) {
+            searchProfile(username, 'https://www.instagram.com/' + username);
+            res.send(`<div class="alert alert-primary" role="alert">✔ Submitted, scanning, will show profile in list</div>`)
         }
-        searchProfile(username, 'https://www.instagram.com/' + username);
-        res.send(`<div class="alert alert-primary" role="alert">✔ Submitted, scanning, will show profile in list</div>`)
+        console.error('no name');
     })
     // Profile Router
     .get('/getProfiles', async (req, res) => {
