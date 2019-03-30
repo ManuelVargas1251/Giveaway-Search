@@ -14,17 +14,16 @@ const pool = new Pool(
     }
 );
 
-// Client-Side JS Router
-app.get('/client.js', function (req, res) {
-    res.sendFile(path.join(__dirname + '/client.js'));
-});
-
 // Routers
 // routes the url to index.html
 app
     // Homepage Router
     .get('/', function (req, res) {
         res.sendFile(path.join(__dirname + '/index.html'))
+    })
+    // Client-Side JS Router
+    .get('/client.js', function (req, res) {
+        res.sendFile(path.join(__dirname + '/client.js'));
     })
     // Username Router
     .get('/search', function (req, res) {
