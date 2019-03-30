@@ -13,53 +13,10 @@ $('#search').click(function () {
     //clears form input
     $('#myForm')[0].reset()
 
-
     // call the rest of the code and have it execute after 3 seconds
     setTimeout(() => {
         console.log('recalling profiles!')
-
-        $('#profiles').load('/getProfiles', function (response, status) {
-            if (status != 'success') { console.error(status) }
-            console.log('response: ' + response)
-            let profiles = JSON.parse(response)
-            let profileLength = profiles["results"].length
-            console.log('response: ' + profiles)
-            //console.log('profiles len: ' + profiles.length)
-            //console.log('profiles: ' + profiles[0])
-
-            $('#profiles').html(function () {
-                let list = '<div class="accordion" id="accordionExample">'
-                // .concat('<ul class="list-group">')
-                for (i = 0; profileLength > i; i++) {
-                    let profileName = JSON.stringify(profiles["results"][i].name).replace(/['"]+/g, '')
-                    list = list.concat(`
-                    <div class="card">
-                        <div class="card-header" id="headingOne">
-                            <h2 class="mb-0">
-                                <button class="btn btn-link" type="button" aria-expanded="true" aria-controls="collapseOne">`)
-                        .concat('@<a href="https://www.instagram.com/' + profileName + '/" target="_blank" style="font-weight: bold;">' + profileName)
-                        .concat(`</a > 
-                                </button>
-                                <div class="btn-group fa-pull-right" role="group" aria-label="button group">
-                                    <button id="viewPosts" type="button" class="btn btn-primary" data-toggle="collapse" data-target="#collapseOne" aria-expanded="false"><i class="fas fa-book"></i></button>
-                                    <button type="button" class="btn btn-success" disabled><i class="fas fa-sync-alt"></i></button>
-                                </div>
-                            </h2>
-                        </div>
-                        <div id="collapseOne" class="collapse" aria-labelledby="headingOne" data-parent="#accordionExample">
-                            <div class="card-body">
-                                <div id="postList"></div>
-                            </div>
-                        </div>
-                    </div>
-                    `)
-                }
-                //list = list.concat('</ul>')
-                list = list.concat('</div')
-                //console.log(list)
-                return list
-            })
-        })
+        getProfiles()
     }, 6000);
 })
 
@@ -71,27 +28,30 @@ $('input[type=text]').on('keypress', function (e) {
     }
 });
 
-// loads profiles from db
-$('#profiles').load('/getProfiles', function (response, status) {
-    if (status != 'success') { console.error(status) }
-    //console.log('response: ' + response)
-    let profiles = JSON.parse(response)["results"]
-    let profileLength = profiles.length
-    // console.log('response: ' + profiles)
-    //console.log('profiles len: ' + profileLength)
+//call function on page init
+getProfiles()
+function getProfiles() {
+    // loads profiles from db
+    $('#profiles').load('/getProfiles', function (response, status) {
+        if (status != 'success') { console.error(status) }
+        //console.log('response: ' + response)
+        let profiles = JSON.parse(response)["results"]
+        let profileLength = profiles.length
+        // console.log('response: ' + profiles)
+        //console.log('profiles len: ' + profileLength)
 
-    $('#profiles').html(function () {
-        let html = '<div class="accordion" id="profilesAccordion">'
+        $('#profiles').html(function () {
+            let html = '<div class="accordion" id="profilesAccordion">'
 
-        profiles.forEach(function (profile, i) {
-            let profileName = JSON.stringify(profile.name).replace(/['"]+/g, '')
-            html = html.concat(`
+            profiles.forEach(function (profile, i) {
+                let profileName = JSON.stringify(profile.name).replace(/['"]+/g, '')
+                html = html.concat(`
                 <div class="card">
                     <div class="card-header" id="headingOne">
                         <h2 class="mb-0">
                             <button class="btn btn-link" type="button" aria-expanded="true" aria-controls="collapseOne">`)
-                .concat('@<a href="https://www.instagram.com/' + profileName + '/" target="_blank" style="font-weight: bold;">' + profileName)
-                .concat(`</a > 
+                    .concat('@<a href="https://www.instagram.com/' + profileName + '/" target="_blank" style="font-weight: bold;">' + profileName)
+                    .concat(`</a > 
                             </button>
                             <div class="btn-group fa-pull-right" role="group" aria-label="button group">
                                 <button id="`+ profileName + `" type="button" class="btn btn-primary viewPosts" data-toggle="collapse" data-target="#collapse-` + i + `" aria-expanded="false">
@@ -114,23 +74,23 @@ $('#profiles').load('/getProfiles', function (response, status) {
                             </div>
                         </div>
                     </div>
-                </div>
-                `)
-                .concat(`
+                </div>`)
+                    .concat(`
                 <script>
                 </script>
             </div>`)
+            })
+            //console.log(list)
+            return html
         })
-        //console.log(list)
-        return html
     })
-})
+}
+
 
 // get posts from profile that was clicked
 $('#profiles').on('click', '.viewPosts', function () {
     let profileName = $(this).attr('id'),
         posts = []
-
 
     if (localStorage.getItem('posts') == null) {
         localStorage.setItem('posts', []);
@@ -159,7 +119,6 @@ $('#profiles').on('click', '.viewPosts', function () {
                 let postsLength = posts.length
 
                 console.log('post len: ' + postsLength)
-
 
                 $(this).html(function () {
                     let html = `<div class="accordion" id="postsAccordian">`
