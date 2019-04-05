@@ -15,7 +15,6 @@ const pool = new Pool(
     }
 );
 
-
 // Routers
 // routes the url to index.html
 app
