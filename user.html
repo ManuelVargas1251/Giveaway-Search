@@ -8,15 +8,133 @@
 	<link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css"
 		integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
 	<link rel="icon" type="image/x-icon" href="#">
+	<style>
+
+	</style>
 </head>
 
 <body>
 	<div id='body' class='container p-5'>
-        
-        
-hi - this page will be user to host the user survey form to data collection
+
+		<div class="card">
+			<div class="card-body">
+				<h5 class="card-title">Instructions</h5>
+				<p class="card-text">
+					hi - this page will be user to host the user survey form to data collection
+				</p>
+			</div>
+		</div>
+		</br>
+
+		<div class="row">
+			<div class="col-sm">
+				<div class="card">
+					<div class="card-body">
+						<!-- <h1>Paragraph:</h1> -->
+						<h5 class="card-title">Paragraph</h5>
+						<p class="card-text">
+							<span>💚GIVEAWAY💚 We’ve teamed up with our friends from <a class="notranslate"
+									href="/healthkic/">@healthkic</a> to bring you a healthy green giveaway. Enter to
+								win
+								our <a class="notranslate" href="/coconut.cloud/">@coconut.cloud</a> Matcha Latte mix
+								and <a class="notranslate" href="/healthkic/">@healthkic</a>’s 12 pack of green juice
+								shooters.
+								Here's
+								how to win: <br>To enter:⁣<br>⁣.⁣<br>1. Like this photo⁣ on both accounts<br>2. Follow
+								<a class="notranslate" href="/coconut.cloud/">@coconut.cloud</a> and <a
+									class="notranslate" href="/healthkic/">@healthkic</a><br>3. Tag a friend below. One
+								tag per
+								comment.<br>⁣.⁣<br>Contest ends March 7th and the winner will be sent a direct message
+								on
+								March
+								8th!
+								Entries limited to U.S. participants only. Best of luck!⁣</span>
+						</p>
+					</div>
+				</div>
 
 
+			</div>
+			<div class="col-sm">
+				<div class="card">
+					<div class="card-body">
+						<crowd-form answer-format="flatten-objects">
+
+							<form class="form-inline">
+								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Is the Giveaway
+									Closed/Over?</label>
+								<select name='closed' class="custom-select my-1 mr-sm-2"
+									id="inlineFormCustomSelectPref">
+									<option selected>Choose...</option>
+									<option value="True">True</option>
+									<option value="False">False</option>
+									<option value="Other">Other</option>
+								</select>
+							</form>
+
+							<form class="form-inline">
+								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Like this photo?</label>
+								<select name='photo' class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+									<option selected>Choose...</option>
+									<option value="True">True</option>
+									<option value="False">False</option>
+								</select>
+							</form>
+
+							<form class="form-inline">
+								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Like this photo on </label>
+								<select name='like' class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+									<option selected>0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+								</select>
+								accounts
+							</form>
+
+							<form class="form-inline">
+								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Follow </label>
+								<select name='follow' class="custom-select my-1 mr-sm-2"
+									id="inlineFormCustomSelectPref">
+									<option selected>0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+								</select>
+								accounts
+							</form>
+
+							<form class="form-inline">
+								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Tag </label>
+								<select name='tag' class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
+									<option selected>0</option>
+									<option value="1">1</option>
+									<option value="2">2</option>
+									<option value="3">3</option>
+									<option value="4">4</option>
+								</select>
+								accounts
+							</form>
+
+
+
+
+
+
+
+
+						</crowd-form>
+					</div>
+				</div>
+				<!-- <h3>Like:</h3> <input type="number" value="0" min="0" max="20" step="1" />
+				<h3>Follow:</h3> <input type="number" value="0" min="0" max="20" step="1" />
+				<h3>Tag:</h3> <input type="number" value="0" min="0" max="20" step="1" /> -->
+
+
+			</div>
+		</div>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -25,5 +143,9 @@ hi - this page will be user to host the user survey form to data collection
 	integrity="sha384-zDnhMsjVZfS3hiP7oCBRmfjkQC4fzxVxFhBx8Hkz2aZX8gEvA/jsP3eXRCvzTofP"
 	crossorigin="anonymous"></script>
 <script src="client.js"></script>
+<script src="bootstrap-input-spinner.js"></script>
+<script>
+	$("input[type='number']").inputSpinner()
+</script>
 
 </html>

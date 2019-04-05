@@ -1,0 +1,89 @@
+<!-- You must include this JavaScript file -->
+<script src="https://assets.crowd.aws/crowd-html-elements.js"></script>
+
+<!-- For the full list of available Crowd HTML Elements and their input/output documentation,
+      please refer to https://docs.aws.amazon.com/sagemaker/latest/dg/sms-ui-template-reference.html -->
+
+<!-- You must include crowd-form so that your task submits answers to MTurk -->
+<crowd-form answer-format="flatten-objects">
+
+    <div>
+        <strong>Instructions: </strong>
+        <span>Read the paragraph and collect the information using th if it's available</span>
+        <div>
+            <div>
+                <p><strong>Paragraph Text:</strong></p>
+
+                <!-- Your website URLs will be substituted for the "url" variable when you publish 
+                       a batch with an input file containing multiple website URLs -->
+                <a href="${paragraphText}" target="_blank">${paragraphText}</a>
+
+            </div>
+
+
+            <crowd-input name="tag1" label="Word/phrase 1"></crowd-input>
+            <crowd-input name="tag2" label="Word/phrase 2"></crowd-input>
+            <crowd-input name="tag3" label="Word/phrase 3"></crowd-input>
+
+
+
+
+
+            <div>
+                <p><strong>Name of the Company:</strong></p>
+                <crowd-input name="companyName" placeholder="e.g. ABC Inc." />
+            </div>
+
+            <div>
+                <p><strong>Address:</strong></p>
+                <p>
+                    <crowd-input name="address1" placeholder="Address Line 1" required></crowd-input>
+                </p>
+                <p>
+                    <crowd-input name="address2" placeholder="Address Line 2"></crowd-input>
+                </p>
+                <p>
+                    <crowd-input name="city" placeholder="City / Town" required></crowd-input>
+                </p>
+                <p>
+                    <crowd-input name="state" placeholder="State / Province / Region" required></crowd-input>
+                </p>
+                <p>
+                    <crowd-input name="zip" placeholder="Zip / Postal Code" required></crowd-input>
+                </p>
+            </div>
+
+            <div>
+                <p><strong>Phone number:</strong></p>
+                <crowd-input name="phone" placeholder="Enter a phone number" type="tel" required></crowd-input>
+            </div>
+
+            <div>
+                <p><strong>Email address:</strong></p>
+                <crowd-input name="email" placeholder="e.g. example@email.com" type="email" required></crowd-input>
+            </div>
+
+            <div>
+                <p><strong>Contact's name:</strong></p>
+                <crowd-input name="contactName" placeholder="Enter name" required></crowd-input>
+            </div>
+
+            <div>
+                <p><strong>Contact's title:</strong></p>
+                <crowd-input name="contactTitle" placeholder="e.g. Sr. Manager" required></crowd-input>
+            </div>
+
+            <div>
+                <p><strong>Hours of operation:</strong></p>
+                <p>Opens at</p>
+                <p>
+                    <crowd-input name="opensAt" type="time" required></crowd-input>
+                </p>
+                <p>Closes at</p>
+                <p>
+                    <crowd-input name="closesAt" type="time" required></crowd-input>
+                </p>
+            </div>
+        </div>
+    </div>
+</crowd-form>

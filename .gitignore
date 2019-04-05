@@ -1,5 +1,6 @@
 #Heroku
 /node_modules
+/turk
 npm-debug.log
 .DS_Store
 /*.env
