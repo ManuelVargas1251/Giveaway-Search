@@ -58,83 +58,231 @@
 			<div class="col-sm">
 				<div class="card">
 					<div class="card-body">
-						<crowd-form answer-format="flatten-objects">
-
-							<form class="form-inline">
-								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Is the Giveaway
-									Closed/Over?</label>
-								<select name='closed' class="custom-select my-1 mr-sm-2"
-									id="inlineFormCustomSelectPref">
-									<option selected>Choose...</option>
-									<option value="True">True</option>
-									<option value="False">False</option>
-									<option value="Other">Other</option>
-								</select>
-							</form>
-
-							<form class="form-inline">
-								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Like this photo?</label>
-								<select name='photo' class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-									<option selected>Choose...</option>
-									<option value="True">True</option>
-									<option value="False">False</option>
-								</select>
-							</form>
-
-							<form class="form-inline">
-								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Like this photo on </label>
-								<select name='like' class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-									<option selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-								</select>
-								accounts
-							</form>
-
-							<form class="form-inline">
-								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Follow </label>
-								<select name='follow' class="custom-select my-1 mr-sm-2"
-									id="inlineFormCustomSelectPref">
-									<option selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-								</select>
-								accounts
-							</form>
-
-							<form class="form-inline">
-								<label class="my-1 mr-2" for="inlineFormCustomSelectPref">Tag </label>
-								<select name='tag' class="custom-select my-1 mr-sm-2" id="inlineFormCustomSelectPref">
-									<option selected>0</option>
-									<option value="1">1</option>
-									<option value="2">2</option>
-									<option value="3">3</option>
-									<option value="4">4</option>
-								</select>
-								accounts
-							</form>
 
 
 
+						<!-- <crowd-form answer-format="flatten-objects"> -->
+						<div class="accordion" id="accordionExample">
+
+							<!-- Like Toggle Box -->
+							<div class="card">
+								<div class="card-header" id="headingOne">
+									<h5 class="mb-0">
+										<button class="btn btn-link" type="button" data-toggle="collapse"
+											data-target="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+											Like
+										</button>
+									</h5>
+								</div>
+
+								<div id="collapseOne" class="collapse show" aria-labelledby="headingOne"
+									data-parent="#accordionExample">
+									<div class="card-body">
+
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+											<label class="form-check-label" for="defaultCheck1">
+												Like this photo/post
+											</label>
+										</div>
+
+										<div class="form-group">
+											<div class="form-check">
+												<input class="form-check-input" type="checkbox" value=""
+													id="defaultCheck1">
+												<label class="form-check-label" for="defaultCheck1">
+													Like this photo on different account(s)
+												</label>
+											</div>
+											
+											<input type="password" class="form-control " id="exampleInputPassword1"
+												placeholder="Profile Name">
+										</div>
+
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+											<label class="form-check-label" for="defaultCheck1">
+												Like last X Posts on Accounts
+											</label>
+										</div>
+
+									</div>
+								</div>
+							</div>
+
+							<!-- Follow Toggle Box -->
+							<div class="card">
+								<div class="card-header" id="headingTwo">
+									<h5 class="mb-0">
+										<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+											data-target="#collapseTwo" aria-expanded="false"
+											aria-controls="collapseTwo">
+											Follow
+										</button>
+									</h5>
+								</div>
+								<div id="collapseTwo" class="collapse" aria-labelledby="headingTwo"
+									data-parent="#accordionExample">
+									<div class="card-body">
+
+										<!-- <div class='container'> -->
+
+										<div class="form-check">
+											<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+											<label class="form-check-label" for="defaultCheck1">
+												Follow this profile/account
+											</label>
+										</div>
+
+										<div class="px-4">Additional Profiles/account to follow:</div>
+										<table id="myTable" class="table order-list table-bordered">
+											<thead>
+												<tr>
+													<td>Profile Name</td>
+													<!-- <td>Gmail</td>
+														<td>Phone</td> -->
+												</tr>
+											</thead>
+											<tbody>
+												<tr>
+													<td class="col-sm-4">
+														<input type="text" name="name" class="form-control" />
+													</td>
+													<td class="col-sm-2"><a class="deleteRow"></a>
+														<input type="button" class="ibtnDel btn btn-md btn-danger "
+															value="Delete">
+													</td>
+												</tr>
+											</tbody>
+											<tfoot>
+												<tr>
+													<td colspan="5" style="text-align: left;">
+														<button id="addrow" value="Add Row" type="button"
+															class="btn btn-primary btn-lg btn-block">Add
+															Item</button>
+													</td>
+												</tr>
+												<tr>
+												</tr>
+											</tfoot>
+										</table>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+
+						<!-- Tag Toggle Box -->
+						<div class="card">
+							<div class="card-header" id="headingThree">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+										data-target="#collapseThree" aria-expanded="false"
+										aria-controls="collapseThree">
+										Tag
+									</button>
+								</h5>
+							</div>
+							<div id="collapseThree" class="collapse" aria-labelledby="headingThree"
+								data-parent="#accordionExample">
+								<div class="card-body">
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+										<label class="form-check-label" for="defaultCheck1">
+											Tag a friend; X tags per comment
+										</label>
+									</div>
 
 
 
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+										<label class="form-check-label" for="defaultCheck1">
+											Tag any profile
+										</label>
+									</div>
+
+								</div>
 
 
-						</crowd-form>
+
+							</div>
+						</div>
+
+						<!-- Post Toggle Box -->
+						<div class="card">
+							<div class="card-header" id="headingFour">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+										data-target="#collapseFour" aria-expanded="false" aria-controls="collapseFour">
+										Post
+									</button>
+								</h5>
+							</div>
+							<div id="collapseFour" class="collapse" aria-labelledby="headingFour"
+								data-parent="#accordionExample">
+								<div class="card-body">
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+										<label class="form-check-label" for="defaultCheck1">
+											Share to your story, tag
+
+										</label>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+
+						<!-- Deadline Toggle Box -->
+						<div class="card">
+							<div class="card-header" id="headingFive">
+								<h5 class="mb-0">
+									<button class="btn btn-link collapsed" type="button" data-toggle="collapse"
+										data-target="#collapseFive" aria-expanded="false" aria-controls="collapseFour">
+										Deadline
+									</button>
+								</h5>
+							</div>
+							<div id="collapseFive" class="collapse" aria-labelledby="headingFive"
+								data-parent="#accordionExample">
+								<div class="card-body">
+
+									<div class="form-check">
+										<input class="form-check-input" type="checkbox" value="" id="defaultCheck1">
+										<label class="form-check-label" for="defaultCheck1">
+											Share to your story, tag
+
+										</label>
+									</div>
+
+									<div class="form-group">
+										<label for="exampleFormControlTextarea1"></label>
+										<textarea class="form-control" id="exampleFormControlTextarea1"
+											rows="3"></textarea>
+									</div>
+
+
+								</div>
+							</div>
+						</div>
+
+
+						<!-- end of list of toggle boxes-->
 					</div>
+					<!-- </crowd-form> -->
+
+
+
+
 				</div>
-				<!-- <h3>Like:</h3> <input type="number" value="0" min="0" max="20" step="1" />
-				<h3>Follow:</h3> <input type="number" value="0" min="0" max="20" step="1" />
-				<h3>Tag:</h3> <input type="number" value="0" min="0" max="20" step="1" /> -->
-
-
 			</div>
 		</div>
+	</div>
 	</div>
 </body>
 <script src="https://code.jquery.com/jquery-3.3.1.min.js"
@@ -146,6 +294,49 @@
 <script src="bootstrap-input-spinner.js"></script>
 <script>
 	$("input[type='number']").inputSpinner()
+</script>
+<!-- <script src="https://assets.crowd.aws/crowd-html-elements.js"></script> -->
+<script>
+
+	$(document).ready(function () {
+		var counter = 0;
+
+		//Follow table - add row to table
+		$("#addrow").on("click", function () {
+			var newRow = $("<tr>");
+			var cols = "";
+			cols += '<td><input type="text" class="form-control" name="name' + counter + '"/></td>';
+			cols += '<td><input type="button" class="ibtnDel btn btn-md btn-danger "  value="Delete"></td>';
+			newRow.append(cols);
+			$("table.order-list").append(newRow);
+			counter++;
+		});
+
+
+
+		$("table.order-list").on("click", ".ibtnDel", function (event) {
+			$(this).closest("tr").remove();
+			counter -= 1
+		});
+
+
+	});
+
+
+	function calculateRow(row) {
+		var price = +row.find('input[name^="price"]').val();
+
+	}
+
+	function calculateGrandTotal() {
+		var grandTotal = 0;
+		$("table.order-list").find('input[name^="price"]').each(function () {
+			grandTotal += +$(this).val();
+		});
+		$("#grandtotal").text(grandTotal.toFixed(2));
+	}
+
+
 </script>
 
 </html>
