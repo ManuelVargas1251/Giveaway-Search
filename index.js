@@ -32,9 +32,38 @@ app
         if (username === undefined || username === '') {
             console.error('no name');
         }
-        searchProfile(username, 'https://www.instagram.com/' + username);
+        searchProfile(username);
         res.send(`<div class="alert alert-primary" role="alert">✔ Submitted, scanning, will show profile in list</div>`)
     })
+    // Sync Profiles
+    .get('/syncProfiles', async (req, res) => {
+        console.log('syncing profiles')
+        let profiles = []
+        try {
+            const client = await pool.connect()
+            const result = await client.query('SELECT name FROM profiles');
+            const results = { 'results': (result) ? result.rows : null };
+            //res.render('pages/db', results);
+            console.log(results)
+            profiles = results["results"]
+
+            res.json(results);
+            client.release();
+        } catch (err) {
+            console.error(err);
+            res.send("Error " + err);
+        }
+        //console.log(profiles)
+        for (profile in profiles) {
+            console.log(profiles[profile].name)
+            try {
+                await searchProfile(profiles[profile].name)
+            } catch (e) { console.log(e) }
+            console.log('--done--')
+        }
+    })
+
+
     // Profile Router
     .get('/getProfiles', async (req, res) => {
         try {
@@ -170,15 +199,39 @@ async function insertProfile(name, profileURL) {
     // console.log('--- profileInsert--end ---')
 }
 
-// this is an async function/ use to separate your code to methods
-async function searchProfile(name, profileUrl) {
+//Sync
+// This function will search 9 most recent posts from all stored profiles
+async function syncProfiles() {
+    // function goes here, basically,
+
+    //query the db for all profiles
+    try {
+        const client = await pool.connect()
+        const result = await client.query('SELECT name FROM profiles');
+        const results = { 'results': (result) ? result.rows : null };
+        //res.render('pages/db', results);
+        console.log('results: ' + results)
+        //res.json(results);
+        client.release();
+    } catch (err) {
+        console.error(err);
+        //res.send("Error " + err);
+    }
+
+    // use list of profiles and the search profile function in a loop.
+}
+
+// this searches a profile for the 9 most recent posts to store
+async function searchProfile(name) {
     console.log('-- searchProfile --')
+
+    let profileUrl = 'https://www.instagram.com/' + name
 
     //open browser page
     const browser = await puppeteer.launch({
         headless: true
         , args: ['--no-sandbox']
-        //, slowMo: 20
+        , slowMo: 20
     })
     const page = await browser.newPage()
     await page.setViewport({ width: 1920, height: 1080 });
@@ -245,5 +298,5 @@ async function searchProfile(name, profileUrl) {
         console.log('iCount: ' + i)
     }
     console.log('-- complete --')
-    //await browser.close()
+    await browser.close()
 }

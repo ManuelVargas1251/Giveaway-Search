@@ -28,6 +28,13 @@ $('input[type=text]').on('keypress', function (e) {
     }
 });
 
+$('#syncProfiles').click(function(){
+    $('#response').load('/syncProfiles', function (response, status) {
+        if (status != 'success') { console.error(status) }
+        console.log('response: ' + response)
+    })
+})
+
 //call function on page init
 getProfiles()
 function getProfiles() {
