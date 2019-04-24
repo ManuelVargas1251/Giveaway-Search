@@ -46,8 +46,8 @@ app
             //res.render('pages/db', results);
             console.log(results)
             profiles = results["results"]
-
-            res.json(results);
+            // res.json(results);
+            res.send(`<div class="alert alert-primary" role="alert">✔ Profile Syncing has begun, new posts will be stored</div>`)
             client.release();
         } catch (err) {
             console.error(err);
